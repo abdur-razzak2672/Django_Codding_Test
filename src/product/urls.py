@@ -1,8 +1,9 @@
 from django.urls import path
 from django.views.generic import TemplateView
 
-from product.views.product import CreateProductView
-from product.views.variant import VariantView, VariantCreateView, VariantEditView
+from product.views.product import *
+from product.views.variant import *
+from product.views.productVariant import *
 
 app_name = "product"
 
@@ -13,8 +14,20 @@ urlpatterns = [
     path('variant/<int:id>/edit', VariantEditView.as_view(), name='update.variant'),
 
     # Products URLs
-    path('create/', CreateProductView.as_view(), name='create.product'),
-    path('list/', TemplateView.as_view(template_name='products/list.html', extra_context={
-        'product': True
-    }), name='list.product'),
+    path('products/', ProductView.as_view(), name='products'),
+    path('product/create', ProductCreateView.as_view(), name='create.product'),
+    path('product/<int:id>/edit', ProductEditView.as_view(), name='update.product'),
+    
+    # Productsvariant URLs
+    path('productVariants/', ProductVariantView.as_view(), name='productVariants'),
+    path('productVariants/create', ProductVariantCreateView.as_view(), name='create.product'),
+    path('productVariants/<int:id>/edit', ProductVariantEditView.as_view(), name='update.product'),
+    
+    # Productsvariant URLs
+    path('productVariantsPrice/', ProductVariantView.as_view(), name='productVariantsPrice'),
+    path('productVariantsPrice/create', ProductVariantCreateView.as_view(), name='create.product'),
+    path('productVariantsPrice/<int:id>/edit', ProductVariantEditView.as_view(), name='update.product'),
+    
+    
+    
 ]

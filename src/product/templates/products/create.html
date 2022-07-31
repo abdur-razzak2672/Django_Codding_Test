@@ -2,20 +2,63 @@
 
 {% block title %} Create Product {% endblock %}
 
+
 {% block content %}
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">Create Product</h1>
-        <a href="{% url 'product:create.product' %}" class="float-right btn btn-primary">All Product</a>
+        <a href="{% url 'product:products' %}" class="float-right btn btn-primary">All Product</a>
     </div>
 
 
-    <script>
-    var varients = {{ variants|safe }}
-    console.log(typeof varients)
-    </script>
+    <div class="d-flex align-items-center justify-content-center">
+        <form method="post" class ="w-100 d-flex align-items-center justify-content-center">
+            {% csrf_token %}
+    
+            <div class="  bg-white shadow p-5 w-100">
+                <div class="form-group">
+                    <label for="name">Product Name</label>
+                    <input type="text" class="form-control" id="name" name="Product Name" placeholder="Product Name">
+                </div>
+                <div class="form-group">
+                    <label for="name">Product Sku</label>
+                    <input type="text" class="form-control" id="name" name="Product SKU" placeholder="Product SKU">
+                </div>
+                <div class="form-group">
+                    <label for="name">Description</label>
+                    <input type="textarea" class="form-control h-100"  name="Description" placeholder="Description">
+                </div>
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+   
 
-    <div id="root">
-        <CreateProduct id="variants" data-variants="{{ variants|safe }}"></CreateProduct>
+
+            <div class="  bg-white shadow p-5 w-100">
+                <div class="form-group">
+                    <label for="name">Variants</label>
+                    <label for="name">Option</label>
+                    <select class="form-control" id="name" name="Product Name" placeholder="Name">
+                        <option value = "xl">Xl</option>
+                    <option value = "xl">m</option>
+                    <option value = "xl">md</option>
+                    <option value = "xl">lg</option>
+                    </select>
+                    
+                </div>
+                <div class="form-group">
+                    <label for="name">Option</label>
+                    <select  class="form-control" id="name" name="Product SKU" placeholder="Name">
+                        <option value = "xl">Xl</option>
+                    <option value = "xl">m</option>
+                    <option value = "xl">md</option>
+                    <option value = "xl">lg</option>
+                    </select>
+                </div>
+                
+                 
+            </div>
+    </form>
     </div>
-
-{% endblock %}
+ 
+    {% endblock %}

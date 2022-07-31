@@ -13,13 +13,18 @@
         <form action="" method="get" class="card-header">
             <div class="form-row justify-content-between">
                 <div class="col-md-2">
-                    <input type="text" name="title" placeholder="Product Title" class="form-control">
+                    <input type="text" name="title" placeholder="enter title" class="form-control">
                 </div>
                 <div class="col-md-2">
+                      
                     <select name="variant" id="" class="form-control">
-                        <option selected disabled>--Select A Variant--</option>
-
+                        <option >Select Variant</option>
+                        {% for product in product_list %}
+                        <option value="{{ product.id }}">{{ product.title }}</option>
+                    {% endfor %}
+                    
                     </select>
+               
                 </div>
 
                 <div class="col-md-3">
@@ -50,78 +55,49 @@
                         <th>Title</th>
                         <th>Description</th>
                         <th>Variant</th>
+                        <th>Price</th>
+                        <th>In Stock</th>
                         <th width="150px">Action</th>
                     </tr>
                     </thead>
 
                     <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>T-Shirt <br> Created at : 25-Aug-2020</td>
-                        <td>Quality product in low cost</td>
-                        <td>
-                            <dl class="row mb-0" style="height: 80px; overflow: hidden" id="variant">
-                                <dt class="col-sm-3 pb-0">
-                                    XL/ Black/ Full
-                                </dt>
-                                <dd class="col-sm-9">
-                                    <dl class="row mb-0">
-                                        <dd class="col-sm-4 pb-0">Price : 200.0</dd>
-                                        <dd class="col-sm-8 pb-0">InStock : 50.</dd>
-                                    </dl>
-                                </dd>
-                                <dt class="col-sm-3 pb-0">
-                                    XL/ Black/ Half
-                                </dt>
-                                <dd class="col-sm-9">
-                                    <dl class="row mb-0">
-                                        <dd class="col-sm-4 pb-0">Price : 200.0</dd>
-                                        <dd class="col-sm-8 pb-0">InStock : 50.</dd>
-                                    </dl>
-                                </dd>
-                                <dt class="col-sm-3 pb-0">
-                                    L/ Black/ Full
-                                </dt>
-                                <dd class="col-sm-9">
-                                    <dl class="row mb-0">
-                                        <dd class="col-sm-4 pb-0">Price : 200.0</dd>
-                                        <dd class="col-sm-8 pb-0">InStock : 50.</dd>
-                                    </dl>
-                                </dd>
-                                <dt class="col-sm-3 pb-0">
-                                    L/ Black/ Half
-                                </dt>
-                                <dd class="col-sm-9">
-                                    <dl class="row mb-0">
-                                        <dd class="col-sm-4 pb-0">Price : 200.0</dd>
-                                        <dd class="col-sm-8 pb-0">InStock : 50.</dd>
-                                    </dl>
-                                </dd>
-                            </dl>
-                            <button onclick="$('#variant').toggleClass('h-auto')" class="btn btn-sm btn-link">Show more
-                            </button>
-                        </td>
-                        <td>
-                            <div class="btn-group btn-group-sm">
-                                <a href="" class="btn btn-success">Edit</a>
-                            </div>
-                        </td>
-                    </tr>
+                        {% for product in product_list %}
+                        <tr>
+                            <td>{{ product.id }}</td>
+                            <td>{{ product.title }}</td>
+                            <td>{{ product.description }}</td>
+                            <td>{% for variant in product.productVariants %}
+                                {{ variant.variant_title }}{% endfor %}</td>
+                            <td>{{ product.price }}</td>
+                            <td>{{ product.stock }}</td>
+                            <td>
+                                <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+                                    <a href="{% url 'product:update.product' product.id %}"
+                                       class="btn btn-primary">Edit</a>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
                     </tbody>
 
                 </table>
             </div>
 
         </div>
-
         <div class="card-footer">
-            <div class="row justify-content-between">
-                <div class="col-md-6">
-                    <p>Showing 1 to 10 out of 100</p>
-                </div>
-                <div class="col-md-2">
-
-                </div>
+            <div class="pagination">
+                <span class="page-links">
+                    {% if page_obj.has_previous %}
+                        <a href="/product/products/?browse={{ input }}&page={{ page_obj.previous_page_number }}">previous</a>
+                    {% endif %}
+                    <span class="page-current">
+                        Showing {{ page_obj.number }} to {{ page_obj.paginator.num_pages }} out of {{ page_obj.paginator.num_pages }}.
+                    </span>
+                    {% if page_obj.has_next %}
+                        <a href="/product/products/?browse={{ input }}&page={{ page_obj.next_page_number }}">next</a>
+                    {% endif %}
+                </span>
             </div>
         </div>
     </div>
